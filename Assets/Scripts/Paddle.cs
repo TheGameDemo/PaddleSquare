@@ -12,6 +12,8 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     bool isAI;
 
+    // The same as Ball Move.
+    // A target and arena extents both in the X dimension.
     public void Move(float target,float arenaExtents)
     {
         Vector3 p = transform.localPosition;
@@ -21,8 +23,12 @@ public class Paddle : MonoBehaviour
         transform.localPosition = p;
     }
 
+    // Takes an X position and target and returns a new X.
+    // This is a dumb reactive AI without any prediction, its difficulty only depends on its speed.
     float AdjustByAI(float x,float target)
     {
+        // If it is on the left side of the target it simply moves right at maximum speed until it matches the target,
+        // otherwise it moves left in the same way.
         if (x < target)
         {
             return Mathf.Min(x + speed * Time.deltaTime, target);
@@ -43,5 +49,15 @@ public class Paddle : MonoBehaviour
             return x - speed * Time.deltaTime;
         }
         return x;
+    }
+
+    public bool HitBall(float ballX, float ballExtents, out float hitFactor)
+    {
+        // hitFactor describes where the ball hit relative to the paddle's center and extents.
+        // In Pong this determines the angle at which the ball bounces off the paddle.
+        hitFactor =
+            (ballX - transform.localPosition.x)/
+            (extents - ballExtents);
+        return -1 <= hitFactor && hitFactor <= 1f;
     }
 }
