@@ -222,6 +222,22 @@ PrefabInstance:
       propertyPath: minExtents
       value: 3.5
       objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.r
+      value: 10.680627
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalRenderer
+      value: 
+      objectReference: {fileID: 1922399062}
     - target: {fileID: 3437143639752264006, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1321,6 +1337,22 @@ PrefabInstance:
       propertyPath: minExtents
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.b
+      value: 0.14785004
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.g
+      value: 10.680627
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -1715868037203035770, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
+      propertyPath: goalRenderer
+      value: 
+      objectReference: {fileID: 2048392227442268353}
     - target: {fileID: 3437143639752264006, guid: ce4789e8bd35cbc41bad356988d3a800, type: 3}
       propertyPath: m_RootOrder
       value: -1
@@ -1900,6 +1932,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 811625127}
     m_Modifications:
+    - target: {fileID: 6968981629686674036, guid: dc1131bf03299444d810d92db0989be2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5d2d3d55dcad574bba2a83c785de9a9, type: 2}
     - target: {fileID: 7190418705010898723, guid: dc1131bf03299444d810d92db0989be2, type: 3}
       propertyPath: m_Name
       value: Cube (3)
@@ -1956,6 +1992,11 @@ PrefabInstance:
 --- !u!4 &1922399061 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8098475604617181371, guid: dc1131bf03299444d810d92db0989be2, type: 3}
+  m_PrefabInstance: {fileID: 1922399060}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1922399062 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6968981629686674036, guid: dc1131bf03299444d810d92db0989be2, type: 3}
   m_PrefabInstance: {fileID: 1922399060}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2061956343
@@ -2171,6 +2212,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 811625127}
     m_Modifications:
+    - target: {fileID: 6968981629686674036, guid: dc1131bf03299444d810d92db0989be2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5d2d3d55dcad574bba2a83c785de9a9, type: 2}
     - target: {fileID: 7190418705010898723, guid: dc1131bf03299444d810d92db0989be2, type: 3}
       propertyPath: m_Name
       value: Cube
@@ -2227,6 +2272,11 @@ PrefabInstance:
 --- !u!4 &2048392227442268352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8098475604617181371, guid: dc1131bf03299444d810d92db0989be2, type: 3}
+  m_PrefabInstance: {fileID: 2048392227442268351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &2048392227442268353 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6968981629686674036, guid: dc1131bf03299444d810d92db0989be2, type: 3}
   m_PrefabInstance: {fileID: 2048392227442268351}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3866873296376070411

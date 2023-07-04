@@ -20,6 +20,18 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     bool isAI;
 
+    static readonly int
+        emissionColorId = Shader.PropertyToID("_EmissionColor"),
+        timeOfLastHitId = Shader.PropertyToID("_TimeOfLastHit");
+
+    [SerializeField]
+    MeshRenderer goalRenderer;
+
+    [SerializeField, ColorUsage(true, true)]
+    Color goalColor = Color.white;
+
+    Material goalMaterial, paddleMaterial;
+
     void ChangeTargetingBias() =>
     targetingBias = Random.Range(-maxTargetingBias, maxTargetingBias);
 
@@ -73,7 +85,13 @@ public class Paddle : MonoBehaviour
         hitFactor =
             (ballX - transform.localPosition.x)/
             (extents - ballExtents);
-        return -1 <= hitFactor && hitFactor <= 1f;
+
+        bool success = -1f <= hitFactor && hitFactor <= 1f;
+        if (success)
+        {
+            paddleMaterial.SetFloat(timeOfLastHitId, Time.time);
+        }
+        return success;
     }
 
     void SetScore(int newScore, float pointsToWin = 1000f)
@@ -91,6 +109,7 @@ public class Paddle : MonoBehaviour
 
     public bool ScorePoint(int pointsToWin)
     {
+        goalMaterial.SetFloat(timeOfLastHitId, Time.time);
         SetScore(score + 1, pointsToWin);
         return score >= pointsToWin;
     }
@@ -105,6 +124,9 @@ public class Paddle : MonoBehaviour
 
     void Awake()
     {
+        goalMaterial = goalRenderer.material;
+        goalMaterial.SetColor(emissionColorId, goalColor);
+        paddleMaterial = GetComponent<MeshRenderer>().material;
         SetScore(0);
     }
 }
