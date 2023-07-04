@@ -14,8 +14,18 @@ public class Game : MonoBehaviour
     [SerializeField, Min(0f)]
     Vector2 arenaExtents = new Vector2(10f, 10f);
 
+    [SerializeField, Min(2)]
+    int pointsToWin = 3;
+
     // Game awakens the ball should start a new game
-    void Awake() => ball.StartNewGame();
+    void Awake() => StartNewGame();
+
+    void StartNewGame()
+    {
+        ball.StartNewGame();
+        bottomPaddle.StartNewGame();
+        topPaddle.StartNewGame();
+    }
 
     void Update()
     {
@@ -36,15 +46,15 @@ public class Game : MonoBehaviour
 
         if (ball.Position.y > yExtents)
         {
-            BounceY(yExtents, topPaddle);           
+            BounceY(yExtents, topPaddle, topPaddle);           
         }
         else if(ball.Position.y < -yExtents)
         {
-            BounceY(-yExtents, bottomPaddle);
+            BounceY(-yExtents, bottomPaddle, bottomPaddle);
         }
     }
 
-    void BounceY(float boundary, Paddle defender)
+    void BounceY(float boundary, Paddle defender, Paddle attacker)
     {
         // How long ago the bounce happened
         float durationAfterBounce = (ball.Position.y - boundary) / ball.Velocity.y;
@@ -58,6 +68,10 @@ public class Game : MonoBehaviour
         if (defender.HitBall(bounceX, ball.Extents, out float hitFactor))
         {
             ball.SetXPositionAndSpeed(bounceX, hitFactor, durationAfterBounce);
+        }
+        else if (attacker.ScorePoint(pointsToWin))
+        {
+            StartNewGame();
         }
     }
 
