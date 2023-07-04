@@ -3,7 +3,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour 
 {
     [SerializeField]
-    ParticleSystem bounceParticleSystem, startParticleSystem;
+    ParticleSystem bounceParticleSystem, startParticleSystem, trailParticleSystem;
 
     [SerializeField]
     int bounceParticleEmission = 20,
@@ -23,7 +23,8 @@ public class Ball : MonoBehaviour
 
     // We might end up making various adjustments to the ball's position and velocity each update,
     // so let's not set its Transform.localPosition all the time.
-    public void UpdateVisualization() => transform.localPosition = new Vector3(position.x, 0f, position.y);
+    public void UpdateVisualization() => trailParticleSystem.transform.localPosition =
+        transform.localPosition = new Vector3(position.x, 0f, position.y);
 
     // We won't make the ball won't move on its own,
     // but instead make it perform standard movement via a public Move method.
@@ -46,6 +47,8 @@ public class Ball : MonoBehaviour
         gameObject.SetActive(true);
 
         startParticleSystem.Emit(startParticleEmission);
+        SetTrailEmission(true);
+        trailParticleSystem.Play();
     }
 
     public void SetXPositionAndSpeed(float start, float speedFactor, float deltaTime)
@@ -96,6 +99,7 @@ public class Ball : MonoBehaviour
     {
         position.x = 0f;
         gameObject.SetActive(false);
+        SetTrailEmission(false);
     }
 
     void EmitBounceParticles(float x, float z, float rotation)
@@ -104,5 +108,11 @@ public class Ball : MonoBehaviour
         shape.position = new Vector3(x, 0f, z);
         shape.rotation = new Vector3(0f, rotation, 0f);
         bounceParticleSystem.Emit(bounceParticleEmission);
+    }
+
+    void SetTrailEmission(bool enabled)
+    {
+        ParticleSystem.EmissionModule emission = trailParticleSystem.emission;
+        emission.enabled = enabled;
     }
 }
