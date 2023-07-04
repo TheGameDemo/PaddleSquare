@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour 
 {
+    [SerializeField]
+    ParticleSystem bounceParticleSystem;
+
+    [SerializeField]
+    int bounceParticleEmission = 20;
+
     // In order to move Ball needs to keep track of both its position and its velocity.
     // As this is effectively a 2D game we'll use Vector2 fields for this.
     [SerializeField, Min(0f)]
@@ -51,14 +57,26 @@ public class Ball : MonoBehaviour
     // The position and velocity in the other dimension are unaffected.
     public void BounceX(float boundary)
     {
+        float durationAfterBounce = (position.x - boundary) / velocity.x;
         position.x = 2f * boundary - position.x;
         velocity.x = -velocity.x;
+        EmitBounceParticles(
+            boundary,
+            position.y - velocity.y * durationAfterBounce,
+            boundary < 0f ? 90f : 270f
+        );
     }
 
     public void BounceY(float boundary)
     {
+        float durationAfterBounce = (position.y - boundary) / velocity.y;
         position.y = 2f * boundary - position.y;
         velocity.y = -velocity.y;
+        EmitBounceParticles(
+            position.x - velocity.x * durationAfterBounce,
+            boundary,
+            boundary < 0f ? 0f : 180f
+        );
     }
 
     // The ball itself won't decide when to bounce, so its extents and position must be publicly accessible.
@@ -75,5 +93,13 @@ public class Ball : MonoBehaviour
     {
         position.x = 0f;
         gameObject.SetActive(false);
+    }
+
+    void EmitBounceParticles(float x, float z, float rotation)
+    {
+        ParticleSystem.ShapeModule shape = bounceParticleSystem.shape;
+        shape.position = new Vector3(x, 0f, z);
+        shape.rotation = new Vector3(0f, rotation, 0f);
+        bounceParticleSystem.Emit(bounceParticleEmission);
     }
 }
