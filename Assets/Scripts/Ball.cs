@@ -34,6 +34,8 @@ public class Ball : MonoBehaviour
         // Uses the configured velocity.
         // Make the velocity's Y component negative so it moves toward the player first.
         velocity = new Vector2(startXSpeed, -constantYSpeed);
+
+        gameObject.SetActive(true);
     }
 
     public void SetXPositionAndSpeed(float start, float speedFactor, float deltaTime)
@@ -65,4 +67,12 @@ public class Ball : MonoBehaviour
 
     // To find the exact moment of the bounce the ball's velocity must be known.
     public Vector2 Velocity => velocity;
+
+    void Awake() => gameObject.SetActive(false);
+
+    public void EndGame()
+    {
+        position.x = 0f;
+        gameObject.SetActive(false);
+    }
 }

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -17,8 +18,16 @@ public class Game : MonoBehaviour
     [SerializeField, Min(2)]
     int pointsToWin = 3;
 
+    [SerializeField]
+    TextMeshPro countdownText;
+
+    [SerializeField, Min(1f)]
+    float newGameDelay = 3f;
+
+    float countdownUntilNewGame;
+
     // Game awakens the ball should start a new game
-    void Awake() => StartNewGame();
+    void Awake() => countdownUntilNewGame = newGameDelay;
 
     void StartNewGame()
     {
@@ -33,11 +42,41 @@ public class Game : MonoBehaviour
         bottomPaddle.Move(ball.Position.x, arenaExtents.x);
         topPaddle.Move(ball.Position.x, arenaExtents.x);
 
+        if (countdownUntilNewGame <= 0f)
+        {
+            UpdateGame();
+        }
+        else
+        {
+            UpdateCountdown();
+        }
+    }
+
+    void UpdateGame()
+    {
         // Ball move and then update its visualization.
         ball.Move();
         BounceYIfNeeded();
         BounceXIfNeeded(ball.Position.x);
         ball.UpdateVisualization();
+    }
+
+    void UpdateCountdown()
+    {
+        countdownUntilNewGame -= Time.deltaTime;
+        if (countdownUntilNewGame <= 0f)
+        {
+            countdownText.gameObject.SetActive(false);
+            StartNewGame();
+        }
+        else
+        {
+            float displayValue = Mathf.Ceil(countdownUntilNewGame);
+            if (displayValue < newGameDelay)
+            {
+                countdownText.SetText("{0}", displayValue);
+            }
+        }
     }
 
     void BounceYIfNeeded()
@@ -71,7 +110,7 @@ public class Game : MonoBehaviour
         }
         else if (attacker.ScorePoint(pointsToWin))
         {
-            StartNewGame();
+            EndGame();
         }
     }
 
@@ -89,4 +128,11 @@ public class Game : MonoBehaviour
         }
     }
 
+    void EndGame()
+    {
+        countdownUntilNewGame = newGameDelay;
+        countdownText.SetText("GAME OVER");
+        countdownText.gameObject.SetActive(true);
+        ball.EndGame();
+    }
 }
