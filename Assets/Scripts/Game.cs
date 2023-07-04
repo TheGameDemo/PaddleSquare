@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 // In control of the gameplay loop and communicates with the ball and paddles
 public class Game : MonoBehaviour

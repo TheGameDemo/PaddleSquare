@@ -22,6 +22,7 @@ public class Paddle : MonoBehaviour
 
     static readonly int
         emissionColorId = Shader.PropertyToID("_EmissionColor"),
+        faceColorId = Shader.PropertyToID("_FaceColor"),
         timeOfLastHitId = Shader.PropertyToID("_TimeOfLastHit");
 
     [SerializeField]
@@ -30,7 +31,7 @@ public class Paddle : MonoBehaviour
     [SerializeField, ColorUsage(true, true)]
     Color goalColor = Color.white;
 
-    Material goalMaterial, paddleMaterial;
+    Material goalMaterial, paddleMaterial, scoreMaterial;
 
     void ChangeTargetingBias() =>
     targetingBias = Random.Range(-maxTargetingBias, maxTargetingBias);
@@ -98,6 +99,7 @@ public class Paddle : MonoBehaviour
     {
         score = newScore;
         scoreText.SetText("{0}", newScore);
+        scoreMaterial.SetColor(faceColorId, goalColor * (newScore / pointsToWin));
         SetExtents(Mathf.Lerp(maxExtents, minExtents, newScore / (pointsToWin - 1f)));
     }
 
@@ -127,6 +129,7 @@ public class Paddle : MonoBehaviour
         goalMaterial = goalRenderer.material;
         goalMaterial.SetColor(emissionColorId, goalColor);
         paddleMaterial = GetComponent<MeshRenderer>().material;
+        scoreMaterial = scoreText.fontMaterial;
         SetScore(0);
     }
 }
