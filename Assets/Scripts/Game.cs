@@ -5,6 +5,9 @@ using static UnityEditor.PlayerSettings;
 // In control of the gameplay loop and communicates with the ball and paddles
 public class Game : MonoBehaviour
 {
+    [SerializeField]
+    LivelyCamera livelyCamera;
+
     // Configuration fields to connect the ball and both paddles
     [SerializeField]
     Ball ball;
@@ -85,10 +88,12 @@ public class Game : MonoBehaviour
 
         if (ball.Position.y < -yExtents)
         {
+            livelyCamera.PushXZ(ball.Velocity);
             BounceY(-yExtents, bottomPaddle, topPaddle);
         }
         else if (ball.Position.y > yExtents)
         {
+            livelyCamera.PushXZ(ball.Velocity);
             BounceY(yExtents, topPaddle, bottomPaddle);
         }
     }
@@ -102,15 +107,20 @@ public class Game : MonoBehaviour
 
         BounceXIfNeeded(bounceX);
         bounceX = ball.Position.x - ball.Velocity.x * durationAfterBounce;
+        livelyCamera.PushXZ(ball.Velocity);
         ball.BounceY(boundary);
 
         if (defender.HitBall(bounceX, ball.Extents, out float hitFactor))
         {
             ball.SetXPositionAndSpeed(bounceX, hitFactor, durationAfterBounce);
         }
-        else if (attacker.ScorePoint(pointsToWin))
+        else
         {
-            EndGame();
+            livelyCamera.JostleY();
+            if (attacker.ScorePoint(pointsToWin))
+            {
+                EndGame();
+            }
         }
     }
 
