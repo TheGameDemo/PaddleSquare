@@ -10,11 +10,12 @@ public class Paddle : MonoBehaviour
 
     [SerializeField, Min(0f)]
     float
-        extents = 4f,
+        minExtents = 4f,
+        maxExtents = 4f,
         speed = 10f,
         maxTargetingBias = 0.75f;
 
-    float targetingBias;
+    float extents, targetingBias;
 
     [SerializeField]
     bool isAI;
@@ -75,10 +76,11 @@ public class Paddle : MonoBehaviour
         return -1 <= hitFactor && hitFactor <= 1f;
     }
 
-    void SetScore(int newScore)
+    void SetScore(int newScore, float pointsToWin = 1000f)
     {
         score = newScore;
         scoreText.SetText("{0}", newScore);
+        SetExtents(Mathf.Lerp(maxExtents, minExtents, newScore / (pointsToWin - 1f)));
     }
 
     public void StartNewGame()
@@ -89,7 +91,20 @@ public class Paddle : MonoBehaviour
 
     public bool ScorePoint(int pointsToWin)
     {
-        SetScore(score + 1);
+        SetScore(score + 1, pointsToWin);
         return score >= pointsToWin;
+    }
+
+    void SetExtents(float newExtents)
+    {
+        extents = newExtents;
+        Vector3 s = transform.localScale;
+        s.x = 2f * newExtents;
+        transform.localScale = s;
+    }
+
+    void Awake()
+    {
+        SetScore(0);
     }
 }

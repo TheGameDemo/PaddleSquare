@@ -83,13 +83,13 @@ public class Game : MonoBehaviour
     {
         float yExtents = arenaExtents.y - ball.Extents;
 
-        if (ball.Position.y > yExtents)
+        if (ball.Position.y < -yExtents)
         {
-            BounceY(yExtents, topPaddle, topPaddle);           
+            BounceY(-yExtents, bottomPaddle, topPaddle);
         }
-        else if(ball.Position.y < -yExtents)
+        else if (ball.Position.y > yExtents)
         {
-            BounceY(-yExtents, bottomPaddle, bottomPaddle);
+            BounceY(yExtents, topPaddle, bottomPaddle);
         }
     }
 
