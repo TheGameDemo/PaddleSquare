@@ -3,10 +3,11 @@ using UnityEngine;
 public class Ball : MonoBehaviour 
 {
     [SerializeField]
-    ParticleSystem bounceParticleSystem;
+    ParticleSystem bounceParticleSystem, startParticleSystem;
 
     [SerializeField]
-    int bounceParticleEmission = 20;
+    int bounceParticleEmission = 20,
+        startParticleEmission = 100;
 
     // In order to move Ball needs to keep track of both its position and its velocity.
     // As this is effectively a 2D game we'll use Vector2 fields for this.
@@ -43,6 +44,8 @@ public class Ball : MonoBehaviour
         velocity.y = -constantYSpeed;
 
         gameObject.SetActive(true);
+
+        startParticleSystem.Emit(startParticleEmission);
     }
 
     public void SetXPositionAndSpeed(float start, float speedFactor, float deltaTime)
