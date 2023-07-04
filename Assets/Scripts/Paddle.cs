@@ -11,10 +11,16 @@ public class Paddle : MonoBehaviour
     [SerializeField, Min(0f)]
     float
         extents = 4f,
-        speed = 10f;
+        speed = 10f,
+        maxTargetingBias = 0.75f;
+
+    float targetingBias;
 
     [SerializeField]
     bool isAI;
+
+    void ChangeTargetingBias() =>
+    targetingBias = Random.Range(-maxTargetingBias, maxTargetingBias);
 
     // The same as Ball Move.
     // A target and arena extents both in the X dimension.
@@ -31,6 +37,8 @@ public class Paddle : MonoBehaviour
     // This is a dumb reactive AI without any prediction, its difficulty only depends on its speed.
     float AdjustByAI(float x,float target)
     {
+        target += targetingBias * extents;
+
         // If it is on the left side of the target it simply moves right at maximum speed until it matches the target,
         // otherwise it moves left in the same way.
         if (x < target)
@@ -57,6 +65,8 @@ public class Paddle : MonoBehaviour
 
     public bool HitBall(float ballX, float ballExtents, out float hitFactor)
     {
+        ChangeTargetingBias();
+
         // hitFactor describes where the ball hit relative to the paddle's center and extents.
         // In Pong this determines the angle at which the ball bounces off the paddle.
         hitFactor =
@@ -74,6 +84,7 @@ public class Paddle : MonoBehaviour
     public void StartNewGame()
     {
         SetScore(0);
+        ChangeTargetingBias();
     }
 
     public bool ScorePoint(int pointsToWin)

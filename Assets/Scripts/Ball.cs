@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
     [SerializeField, Min(0f)]
     float
         maxXSpeed = 20f,
-        startXSpeed = 8f,
+        maxStartXSpeed = 2f,
         constantYSpeed = 10f,
         extents = 0.5f;         // A proper bounce happens when the ball's edge touches a boundary, not its center.
                                 // So we need to know the ball's size.
@@ -33,7 +33,8 @@ public class Ball : MonoBehaviour
 
         // Uses the configured velocity.
         // Make the velocity's Y component negative so it moves toward the player first.
-        velocity = new Vector2(startXSpeed, -constantYSpeed);
+        velocity.x = Random.Range(-maxStartXSpeed, maxStartXSpeed);
+        velocity.y = -constantYSpeed;
 
         gameObject.SetActive(true);
     }
