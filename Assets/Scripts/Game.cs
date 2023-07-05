@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // In control of the gameplay loop and communicates with the ball and paddles
 public class Game : MonoBehaviour
@@ -28,18 +29,51 @@ public class Game : MonoBehaviour
 
     float countdownUntilNewGame;
 
+    private PlayerInput playerInput;
+    private PlayerInputActions playerInputActions;
+
+
+   //public void Jump(InputAction.CallbackContext context)
+    //{
+    //    if (context.performed)
+    //    {
+    //        Debug.Log("Jump! " + context.phase);
+    //    }
+    //}
+
     // Game awakens the ball should start a new game
     void Awake() => countdownUntilNewGame = newGameDelay;
 
     void StartNewGame()
     {
+        //InitInput();
+
         ball.StartNewGame();
         bottomPaddle.StartNewGame();
         topPaddle.StartNewGame();
     }
 
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+
+        playerInputActions = new PlayerInputActions();
+        playerInputActions.Player.Enable();
+    }
+
+    //private void InitInput()
+    //{
+    //    playerInput = GetComponent<PlayerInput>();
+
+    //    playerInputActions = new PlayerInputActions();
+    //    playerInputActions.Player.Enable();
+    //    //playerInputActions.Player.Jump.performed += Jump;
+    //}
+
     void Update()
     {
+        Paddle.SetInputVector(playerInputActions.Player.Move.ReadValue<Vector2>());
+
         // Move both paddles
         bottomPaddle.Move(ball.Position.x, arenaExtents.x);
         topPaddle.Move(ball.Position.x, arenaExtents.x);

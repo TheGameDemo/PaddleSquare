@@ -687,6 +687,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674483094}
     m_Modifications:
+    - target: {fileID: 680208566217191167, guid: 4ed73fc694c2356439f6888b15f544d0, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 680208566217191167, guid: 4ed73fc694c2356439f6888b15f544d0, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
+    - target: {fileID: 680208566217191167, guid: 4ed73fc694c2356439f6888b15f544d0, type: 3}
+      propertyPath: m_enableVertexGradient
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3686668047335187820, guid: 4ed73fc694c2356439f6888b15f544d0, type: 3}
       propertyPath: m_Name
       value: topScore

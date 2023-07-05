@@ -96,3 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6822a8ee4a9e8f14d8241c27cfa25637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  minExtents: 4
+  maxExtents: 4
+  speed: 10
+  maxTargetingBias: 0.75
+  isAI: 0
+  goalRenderer: {fileID: 0}
+  goalColor: {r: 1, g: 1, b: 1, a: 1}

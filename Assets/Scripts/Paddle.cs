@@ -1,8 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Paddle : MonoBehaviour
 {
+    public static Vector2 inputVector;
+
+    public static void SetInputVector(Vector2 vector)=>inputVector = vector;
+
     [SerializeField]
     TextMeshPro scoreText;
 
@@ -64,17 +69,7 @@ public class Paddle : MonoBehaviour
 
     float AdjustByPlayer(float x)
     {
-        bool goRight = Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D);
-        bool goLeft = Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A);
-        if (goRight && !goLeft)
-        {
-            return x + speed * Time.deltaTime;
-        }
-        else if (goLeft && !goRight)
-        {
-            return x - speed * Time.deltaTime;
-        }
-        return x;
+        return x + inputVector.x * speed * Time.deltaTime;
     }
 
     public bool HitBall(float ballX, float ballExtents, out float hitFactor)
@@ -126,6 +121,7 @@ public class Paddle : MonoBehaviour
 
     void Awake()
     {
+        inputVector = new Vector2(0, 0);
         goalMaterial = goalRenderer.material;
         goalMaterial.SetColor(emissionColorId, goalColor);
         paddleMaterial = GetComponent<MeshRenderer>().material;
