@@ -33,7 +33,7 @@ public class Game : MonoBehaviour
     private PlayerInputActions playerInputActions;
 
 
-   //public void Jump(InputAction.CallbackContext context)
+    //public void Jump(InputAction.CallbackContext context)
     //{
     //    if (context.performed)
     //    {
